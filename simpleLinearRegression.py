@@ -7,9 +7,6 @@ data = pd.DataFrame({
             'Hours studied (x)': [0, 10, 8, 7, 4, 8, 10, 11, 15, 20, 5, 2, 13, 10, 6],
             'Points won (y)': [15, 78, 70, 65, 50, 73, 80, 88, 95, 96, 55, 32, 75, 80, 60]
             })
-
-
-
 ## Calculations ##
 
 r, Sx, Sy, xHat, yHat = 0, 0, 0, 0, 0
@@ -35,9 +32,6 @@ if len(data['Hours studied (x)']) == len(data['Points won (y)']):
     else:
         print('The data in the two rows has different lenghts')
     
-    for i in range(len(xSub)):
-        print([xSub[i], ySub[i], product[i], xGr[i], yGr[i]])
-
     # Calculations for b #
 
     r = sum(product) / math.sqrt(sum(xGr) * sum(yGr))
@@ -57,30 +51,27 @@ else:
 # r - Pearsons correlation coefficient
 # Sn = sqrt((Sum(n-nHat)^2)/(n-1))
 
-
 b = r * (Sy/Sx)
-print(b)
-
-
 
 ## Intercept of the line ##
 
 # a = yHat - bxHat
 # x and y Hat - mean values of their columns
 
-
 a = yHat - b * xHat
-print(a)
-
 
 ## Testing the algorithm ##
 
 result = [round((a + b * hour), 0) for hour in data['Hours studied (x)']]
 
+for i in range(len(xSub)):
+    print([xSub[i], ySub[i], product[i], xGr[i], yGr[i]])
+
+
 print("Results")
 
-
 for i in range(len(result)):
-    print([data.iloc[i,0], data.iloc[i, 1], result[i]])
+    print([data.iloc[i,0], data.iloc[i, 1], result[i], result[i] - data.iloc[i, 1], round((result[i] - data.iloc[i, 1]) / data.iloc[i, 1 ] * 100, 3)])
+
 
 
