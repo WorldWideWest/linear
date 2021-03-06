@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 ## Defining the data ##
 
@@ -18,10 +19,24 @@ if len(data['Hours studied (x)']) == len(data['Points won (y)']):
 
     xSub = [round((hour - xHat), 4) for hour in data['Hours studied (x)']]
     ySub = [round((hour - yHat), 4) for hour in data['Points won (y)']]
-    
-    
+  
+    xGr = [round((hour - xHat)**2, 4) for hour in data['Hours studied (x)']]
+    yGr = [round((hour - yHat)**2, 4) for hour in data['Points won (y)']]
+   
 
+    product = []
+    sumProduct = 0
+    
+    if len(xSub) == len(ySub):
+        for index in range(len(xSub)):
+            product.append(round(xSub[index] * ySub[index], 4))
+    else:
+        print('The data in the two rows has different lenghts')
+    
+    for i in range(len(xSub)):
+        print([xSub[i], ySub[i], product[i], xGr[i], yGr[i]])
 
+    
 else:
     print('The data in the two rows has different lenghts')
 
@@ -32,6 +47,12 @@ else:
 # S - standard deviation
 # r = Sum((x-xHat)(y-yHat)) / SQRT(Sum(x-xHat)^2 Sum(y-yHat)^2)
 # r - Pearsons correlation coefficient
+
+
+# Sn = sqrt((Sum(n-nHat)^2)/(n-1))
+
+
+r = sum(product) / math.sqrt(sum(xGr) * sum(yGr))
 
 
 
