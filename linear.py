@@ -12,6 +12,8 @@ data = pd.DataFrame({
 
 ## Calculations ##
 
+r, Sx, Sy, xHat, yHat = 0, 0, 0, 0, 0
+
 if len(data['Hours studied (x)']) == len(data['Points won (y)']):
 
     xHat = sum(data['Hours studied (x)']) / len(data['Hours studied (x)'])
@@ -36,7 +38,13 @@ if len(data['Hours studied (x)']) == len(data['Points won (y)']):
     for i in range(len(xSub)):
         print([xSub[i], ySub[i], product[i], xGr[i], yGr[i]])
 
+    # Calculations for b #
+
+    r = sum(product) / math.sqrt(sum(xGr) * sum(yGr))
     
+    Sx = math.sqrt(sum(xGr)/(len(xGr)-1))
+    Sy = math.sqrt(sum(yGr)/(len(yGr)-1))
+
 else:
     print('The data in the two rows has different lenghts')
 
@@ -47,20 +55,11 @@ else:
 # S - standard deviation
 # r = Sum((x-xHat)(y-yHat)) / SQRT(Sum(x-xHat)^2 Sum(y-yHat)^2)
 # r - Pearsons correlation coefficient
-
-
 # Sn = sqrt((Sum(n-nHat)^2)/(n-1))
 
 
-r = sum(product) / math.sqrt(sum(xGr) * sum(yGr))
-
-
-
-
-
-
-
-
+b = r * (Sy/Sx)
+print(b)
 
 
 
@@ -68,4 +67,20 @@ r = sum(product) / math.sqrt(sum(xGr) * sum(yGr))
 
 # a = yHat - bxHat
 # x and y Hat - mean values of their columns
+
+
+a = yHat - b * xHat
+print(a)
+
+
+## Testing the algorithm ##
+
+result = [round((a + b * hour), 0) for hour in data['Hours studied (x)']]
+
+print("Results")
+
+
+for i in range(len(result)):
+    print([data.iloc[i,0], data.iloc[i, 1], result[i]])
+
 
